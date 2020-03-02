@@ -1,0 +1,82 @@
+
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="d3.js"></script>
+    <script src="gpo.js"></script>
+  </head>
+  <body>
+    <div id="screenshot"></div>
+    <div id="overlay">
+      <div id="sticks">
+        <svg>
+          <defs>
+            <linearGradient id="stickBoundsMaskGradient" x1="0" y1="0" x2="0" y2="100%">
+              <stop offset="0%" stop-color="black"/>
+              <stop offset="33%" stop-color="black"/>
+              <stop offset="50%" stop-color="#ccc"/>
+              <stop offset="66%" stop-color="black"/>
+              <stop offset="100%" stop-color="black"/>
+            </linearGradient>
+            <mask id="stickBoundsMask">
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#stickBoundsMaskGradient)"/>
+            </mask>
+          </defs>
+          <g class="bounds" mask="url(#stickBoundsMask)">
+            <circle cx="96" cy="96" r="94" stroke="black" stroke-width="4" fill="none" opacity="0.75"/>
+            <path d="M 2 96 L 18 96 M 88 96 L 104 96 M 174 96 L 190 96 M 96 88 L 96 104" stroke="black" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.75"/>
+            <path d="M 2 96 L 18 96 M 88 96 L 104 96 M 174 96 L 190 96 M 96 88 L 96 104" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="96" cy="96" r="94" stroke="white" stroke-width="2" fill="none"/>
+          </g>
+          <g class="steering" opacity="75%">
+            <line x1="96" y1="96" x2="18" y2="88" stroke="#00A2FF" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="18" cy="88" r="4" stroke="none" fill="#00A2FF"/>
+          </g>
+          <g class="camera" opacity="75%">
+            <line x1="96" y1="96" x2="160" y2="40" stroke="white" stroke-width="1"/>
+            <circle cx="160" cy="40" r="3" stroke="none" fill="white"/>
+          </g>
+        </svg>
+      </div>
+      <div class="buttons left">
+        <meter min="0" max="1" value="0.5"></meter>
+        <div class="bumper b4"></div> <!-- left bumper -->
+        <div class="special b8"></div> <!-- share/view/select -->
+        <!-- up, down, left, right -->
+        <div class="button b12"></div>
+        <div class="button b13"></div>
+        <div class="button b14"></div>
+        <div class="button b15"></div>
+      </div>
+
+      <div class="buttons right">
+        <meter min="0" max="1" value="0.5"></meter>
+        <div class="bumper b5"></div> <!-- right bumper -->
+        <div class="special b9"></div> <!-- options/menu/start -->
+        <!-- A B X Y -->
+        <div class="button b0"></div>
+        <div class="button b1"></div>
+        <div class="button b2"></div>
+        <div class="button b3"></div>
+      </div>
+      <div id="timeline">
+        <svg>
+          <defs>
+            <linearGradient id="acceleratorAreaGradient" x1="0" y1="0" x2="100%" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="rgba(255, 255, 255, 0.8)"/>
+              <stop offset="50%" stop-color="rgba(255, 255, 255, 0.0)"/>
+              <stop offset="100%" stop-color="rgba(255, 255, 255, 0.8)"/>
+            </linearGradient>
+            <linearGradient id="brakeAreaGradient" x1="0" y1="0" x2="100%" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="rgba(255, 130, 130, 0.8)"/>
+              <stop offset="50%" stop-color="rgba(255, 130, 130, 0.0)"/>
+              <stop offset="100%" stop-color="rgba(255, 130, 130, 0.8)"/>
+            </linearGradient>
+          </defs>
+          <path class="accelerator" stroke="white" stroke-width="1" fill="url(#acceleratorAreaGradient)"/>
+          <path class="brake" stroke="#FF8282" stroke-width="1" fill="url(#brakeAreaGradient)"/>
+          <path class="steering" stroke="#00A2FF" stroke-width="1" fill="none"/>
+      </div>
+    </div>
+  </body>
+</html>

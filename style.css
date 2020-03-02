@@ -1,0 +1,214 @@
+html, body, #screenshot {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  width: 512px;
+  height: 512px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0);
+  /* background: #888; */
+}
+
+#overlay {
+  position: absolute;
+  width: 512px;
+  height: 512px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -256px;
+  /* background-color: rgba(255, 255, 255, 0.1); */
+}
+
+#sticks {
+  position: absolute;
+  width: 192px;
+  height: 192px;
+  top: 0px;
+  left: 50%;
+  margin-left: -96px;
+}
+
+#sticks svg {
+  width: 100%;
+  height: 100%;
+}
+
+.buttons {
+  position: absolute;
+  top: 64px;
+  width: 88px;
+  height: 112px;
+}
+
+.buttons.left {
+  left: 64px;
+}
+
+.buttons.right {
+  right: 64px;
+}
+
+.buttons .button, .buttons meter, .buttons .bumper, .buttons .special {
+  box-shadow: 0px 0px 2px 1px black;
+}
+
+/* Trigger meters */
+.buttons meter {
+  width: 48px;
+  height: 8px;
+  position: absolute;
+  top: 8px;
+}
+.buttons meter::-webkit-meter-bar {
+  border: 1px solid white;
+  border-radius: 3px;
+  background: none;
+}
+
+.buttons meter::-webkit-meter-optimum-value {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.buttons.left meter::-webkit-meter-optimum-value {
+  float: right;
+}
+
+.buttons.left meter {
+  right: 32px;
+}
+
+.buttons.right meter {
+  left: 32px;
+}
+
+/* Buttons */
+.buttons .button {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+
+.buttons .bumper, .buttons .special {
+  position: absolute;
+  border: 1px solid white;
+  border-radius: 4px;
+}
+
+.buttons .button, .buttons .bumper, .buttons .special {
+  box-sizing: border-box;
+}
+
+.buttons .bumper {
+  width: 32px;
+  height: 8px;
+  top: 24px;
+}
+
+.buttons.left .bumper {
+  right: 32px;
+}
+
+.buttons.right .bumper {
+  left: 32px;
+}
+
+.buttons .special {
+  width: 8px;
+  height: 16px;
+  top: 32px;
+}
+
+.buttons.left .special {
+  right: 8px;
+}
+
+.buttons.right .special {
+  left: 8px;
+}
+
+/* Up, Down, Left, Right */
+.buttons .b12 {
+  top: 40px;
+  right: 40px;
+}
+
+.buttons .b13 {
+  top: 88px;
+  right: 40px;
+}
+
+.buttons .b14 {
+  top: 64px;
+  right: 64px;
+}
+
+.buttons .b15 {
+  top: 64px;
+  right: 16px;
+}
+
+.buttons .pressed {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* A B X Y */
+.buttons .b0 {
+  top: 88px;
+  left: 40px;
+}
+
+.buttons .b0.pressed {
+  background: green;
+}
+
+.buttons .b1 {
+  top: 64px;
+  left: 64px;
+}
+
+.buttons .b1.pressed {
+  background: red;
+}
+
+.buttons .b2 {
+  top: 64px;
+  left: 16px;
+}
+
+.buttons .b2.pressed {
+  background: blue;
+}
+
+.buttons .b3 {
+  top: 40px;
+  left: 40px;
+}
+
+.buttons .b3.pressed {
+  background: yellow;
+}
+
+#timeline {
+  position: absolute;
+  width: 128px;
+  /* height: 256px; */
+  height: 320px;
+  left: 50%;
+  bottom: 0;
+  margin-left: -64px;
+  /*
+  background-color: rgba(255, 0, 0, 0.5);
+  */
+  -webkit-mask-image: -webkit-gradient(
+    linear, left top, left bottom,
+    color-stop(0.0, rgba(0, 0, 0, 1)),
+    color-stop(1.0, rgba(0, 0, 0, 0))
+  );
+}
+
+#timeline svg {
+  width: 100%;
+  height: 100%;
+}
