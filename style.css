@@ -28,7 +28,14 @@ html, body, #screenshot {
   margin-left: -96px;
 }
 
+#sticks canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 #sticks svg {
+  position: absolute;
   width: 100%;
   height: 100%;
 }

@@ -1,6 +1,6 @@
 var GPO = {
   //Config
-  logDuration: 3000, // in ms
+  logDuration: 2000, // in ms
 
   gp: null,
   ticking: false,
@@ -16,6 +16,10 @@ var GPO = {
     12, 13, 14, 15 // Up Down Left Right
     /* 16, 17 // Guide, Click */
   ],
+
+  sticksTrailOpacityScale: d3.scalePow()
+    .exponent(0.1)
+    .range([0, 0.5]),
 
   stickScale: d3.scaleLinear()
     .domain([-1, 1])
@@ -74,6 +78,7 @@ var GPO = {
 
   tick: function () {
     var gamepads = navigator.getGamepads();
+    let ctx = GPO.sticksTrailCtx;
 
     if (GPO.ticking && gamepads && gamepads.length && gamepads[0] && gamepads[0].connected) {
       GPO.gp = gamepads[0];
@@ -82,7 +87,7 @@ var GPO = {
         return el.timestamp >= GPO.gp.timestamp - GPO.logDuration;
       });
 
-      GPO.log.unshift({
+      GPO.log.push({
         timestamp: GPO.gp.timestamp,
         steering: {
           x: GPO.gp.axes[0],
@@ -104,6 +109,32 @@ var GPO = {
         GPO.gp.timestamp,
         GPO.gp.timestamp - GPO.logDuration
       ]);
+
+      if (GPO.log.length >= 2) {
+        GPO.sticksTrailOpacityScale.domain([
+          GPO.gp.timestamp - GPO.logDuration,
+          GPO.gp.timestamp
+        ]);
+
+        ctx.clearRect(0, 0, 192, 192);
+
+        for (var i = 0; i < GPO.log.length - 2; i++) {
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = 'rgba(128, 255, 128, ' + GPO.sticksTrailOpacityScale(GPO.log[i].timestamp) + ')';
+          //ctx.strokeStyle = 'rgba(128, 255, 128, 0.5)';
+          ctx.moveTo(
+            GPO.stickScale(GPO.log[i].steering.x),
+            GPO.stickScale(GPO.log[i].steering.y)
+          );
+          ctx.lineTo(
+            GPO.stickScale(GPO.log[i+1].steering.x),
+            GPO.stickScale(GPO.log[i+1].steering.y)
+          );
+          ctx.stroke();
+        }
+      }
 
       // Update the steering vector display
       GPO.steeringStickTip
@@ -158,6 +189,8 @@ var GPO = {
   },
 
   main: function () {
+    GPO.sticksTrailCtx = document.getElementById('sticksTrail').getContext('2d');
+
     GPO.steeringStickTip = d3.select('#sticks .steering circle');
     GPO.steeringStickLine = d3.select('#sticks .steering line');
 
