@@ -3,8 +3,8 @@ const {app, BrowserWindow} = require('electron');
 function createWindow() {
   let win = new BrowserWindow({
     frame: false,
-    x: 2560/2 - 256,
-    y: 1440 - 512,
+    x: 3840/2 - 256,
+    y: 2160 - 512,
     width: 512,
     height: 512,
     useContentSize: true,
@@ -19,7 +19,7 @@ function createWindow() {
   win.setAlwaysOnTop(true, 'floating', 1);
 
   win.loadFile('index.html');
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
