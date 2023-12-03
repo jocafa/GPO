@@ -44,6 +44,7 @@ var GPO = {
   steeringPath: null,
   acceleratorPath: null,
   brakePath: null,
+  ebrakePath: null,
 
   // Generators
   steeringLineGen: d3.line()
@@ -76,7 +77,19 @@ var GPO = {
       return GPO.timelineXScale(d.brake);
     }),
 
+  ebrakePathGen: d3.area()
+    .y(function (d) {
+      return GPO.timelineYScale(d.timestamp);
+    })
+    .x0(function(d) {
+      return GPO.timelineXScale(-d.ebrake);
+    })
+    .x1(function(d) {
+      return GPO.timelineXScale(d.ebrake);
+    }),
+
   tick: function () {
+    let now = Date.now();
     var gamepads = navigator.getGamepads();
     let ctx = GPO.sticksTrailCtx;
 
@@ -84,11 +97,12 @@ var GPO = {
       GPO.gp = gamepads[0];
 
       GPO.log = GPO.log.filter(function (el) {
-        return el.timestamp >= GPO.gp.timestamp - GPO.logDuration;
+        //return el.timestamp > GPO.gp.timestamp - GPO.logDuration;
+        return el.timestamp >= now - GPO.logDuration;
       });
 
       GPO.log.push({
-        timestamp: GPO.gp.timestamp,
+        timestamp: now,
         steering: {
           x: GPO.gp.axes[0],
           y: GPO.gp.axes[1]
@@ -98,22 +112,33 @@ var GPO = {
           y: GPO.gp.axes[3]
         },
         brake: GPO.gp.buttons[6].value,
-        accelerator: GPO.gp.buttons[7].value
+        accelerator: GPO.gp.buttons[7].value,
+        ebrake: GPO.gp.buttons[0].value
       });
 
       if (GPO.log.length > 500) {
         debugger;
       }
 
+      //console.log(GPO.log.length);
+
       GPO.timelineYScale.domain([
+        /*
         GPO.gp.timestamp,
         GPO.gp.timestamp - GPO.logDuration
+        */
+        now,
+        now - GPO.logDuration
       ]);
 
       if (GPO.log.length >= 2) {
         GPO.sticksTrailOpacityScale.domain([
+          /*
           GPO.gp.timestamp - GPO.logDuration,
           GPO.gp.timestamp
+          */
+          now - GPO.logDuration,
+          now
         ]);
 
         ctx.clearRect(0, 0, 192, 192);
@@ -168,6 +193,7 @@ var GPO = {
 
       GPO.steeringPath.attr('d', GPO.steeringLineGen(GPO.log));
       GPO.brakePath.attr('d', GPO.brakePathGen(GPO.log));
+      GPO.ebrakePath.attr('d', GPO.ebrakePathGen(GPO.log));
       GPO.acceleratorPath.attr('d', GPO.acceleratorPathGen(GPO.log));
 
       requestAnimationFrame(GPO.tick);
@@ -205,6 +231,7 @@ var GPO = {
     });
 
     GPO.acceleratorPath = d3.select('#timeline .accelerator');
+    GPO.ebrakePath = d3.select('#timeline .ebrake');
     GPO.brakePath = d3.select('#timeline .brake');
     GPO.steeringPath = d3.select('#timeline .steering');
 

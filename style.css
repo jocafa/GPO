@@ -9,6 +9,10 @@ html, body, #screenshot {
   /* background: #888; */
 }
 
+html {
+  zoom: 2.0;
+}
+
 #overlay {
   position: absolute;
   width: 512px;
@@ -56,7 +60,7 @@ html, body, #screenshot {
 }
 
 .buttons .button, .buttons meter, .buttons .bumper, .buttons .special {
-  box-shadow: 0px 0px 2px 1px black;
+  /* box-shadow: 0px 0px 2px 1px black; */
 }
 
 /* Trigger meters */
